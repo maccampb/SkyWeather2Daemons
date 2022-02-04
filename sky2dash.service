@@ -1,0 +1,16 @@
+[Unit]
+Description=skyweather2 dashboard app service
+After=network.target
+After=mysqld.service
+
+[Service]
+Type=idle
+ExecStart=/home/pi/bin/dashboard.sh
+WorkingDirectory=/home/pi/SDL_Pi_SkyWeather2/dash_app
+Restart=always
+RestartSec=10
+User=root
+Requires=multi-user.target
+
+[Install]
+# WantedBy=multi-user.target
