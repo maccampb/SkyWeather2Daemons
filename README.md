@@ -6,15 +6,17 @@ SkyWeather2 (SKW2) from SwitchDocLabs is a great project that allows makers to s
 
 SKW2 currently uses the rc.local file to start up the skyweather and dashboard apps when the system reboots.
 
-There is another way.
-
-Many modern Linux distributions use a software suite [systemd] to manage the system's services (or *daemons*), for example to automatically start certain services in the correct order when the system boots.
+Many modern Linux distributions use a software suite [systemd] to manage the system's services (or *daemons*), for example to automatically start certain services in the correct order when the system boots. This is replacing the rc.local method in newer systems.
 
 Aside from this `README.md` file, this repository contains a basic
-implementation of a Python service consisting of 2 Python scripts
-and 2 systemd unit files that, when installed, will provide a systemd implementation for both the SkyWeather2 server and the dash dashboard server.
+implementation of Python services consisting of 2 Python scripts
+and 2 systemd unit files.
+
+These files, when installed, will provide a systemd implementation to startup and manage both the SkyWeather2 server and the dash dashboard server.
 
 These services provide the added bonus that if the SkyWeather2 or dashboard services shutdown unexpectedly, systemd will try to restart them.
+
+NOTE: These instructions assume that the file directories and files are the same as the ones on the SwitchDocLabs SD Card. These will set up the SkyWeather2 service for the main software package, and you can repeat this to setup the dashboard component.
 
 To setup systemd for the main SkyWeather2 service, you'll use:
 
@@ -24,24 +26,24 @@ To setup systemd for the main SkyWeather2 service, you'll use:
 files. These need to be copied from wherever you downloaded them to the appropriate directories on the SwitchDocLabs Pi.
 
 
-Note: if you have already set up the rc.local startup from the setup guide, page xx, you need to comment out those changes out prior to this setup.
+Note: if you have already set up the rc.local startup from the setup guide, "SkyWeather2ConfigurationAndOperationsManual1.2.pdf" page 9, you need to comment out those changes out prior to this setup.
 
 
-For example, to set up the main SkyWeather2 service:
+To set up the main SkyWeather2 service:
 
-ssh into your SkyWeather2 Raspberry Pi
+ssh into your SkyWeather2 Raspberry Pi and change to the services directory. We are putting these the system directory versus the "user" directory as they need to be run as superuser (su). You may need to use the sudo command to get access to the required directories.
 
 ```
-cd /etc/systemd/systemd
+cd /etc/systemd/system
 
 ```
 
 copy the ".service" file:
 
 ```
-cp /yourdownloadlocation/skyweather2.service .
+cp /yourdownloadlocation/skyweather2.service /etc/systemd/system
 ```
-(don't forget the "." at the end) and then do a
+and then do a
 
 ```
 ls -la
@@ -52,33 +54,39 @@ Next, copy the .sh file into the same directory as the SkyWeather2.py file. This
 Check that it was copied correctly.
 
 You may need to make the .sh files executable.
+```
+chmod +x skyweather2.service
+```
 
+Tell the systemd daemon to reload the systemd service files to include the new service we ksut added.
 
-Reload the systemd service files to include the new service we ksut added.
 ```
 sudo systemctl daemon-reload
 ```
 
-Next, enable the service to launch on every reboot. This is important as you will scratch your head alot wondering why the service stops when you reboot. This is done using the systemctl command...
+Next, enable the service to launch on every reboot. This is important as you will scratch your head alot wondering why the service doesn't start up again when you reboot. This is done using the systemctl command...
 
 ```
-sudo systemctl enable SkyWeather2
+sudo systemctl enable skyweather2
 ```
 
 Start your service by telling the systemd to attempt to start the server.
 
 ```
-sudo systemctl start SkyWeather2
+sudo systemctl start skyweather2
 ```
 
 To check the status of your service, see how long it's been running and get other information related to your server:
 
 ```
-sudo systemctl status SkyWeather2
+sudo systemctl status skyweather2
+```
+
+it should look like
 ```
 
 
-If you want to disable your service on every reboot, because you need to do a upgrade or the program is getting into an loop:
+If you want to disable your service when the system reboots, because you need to do a upgrade or the program is getting into an loop:
 
 ```
 sudo systemctl disable SkyWeather2
@@ -86,7 +94,7 @@ sudo systemctl disable SkyWeather2
 
 ## Where to go from here
 
-This will give you a service that you can use to manage the SkyWeather2 server, and you can repeat the steps for the dash server with the provided Files by repeating the same steps.
+This will give you a service that you can use to manage the SkyWeather2 server. you can repeat the steps for the dash server with the provided Files by repeating the same steps.
 
 You can look up more information about systemd at [www.systemd.io](https://www.systemd.io)
 

@@ -1,27 +1,6 @@
-## **Autostart package 4 Skyweather2**
-
-[Unit] Description=My service After=network.target
-
-[Service] Type= ExecStart=/usr/bin/python3 -u main.py
-WorkingDirectory=/home/pi/myscript StandardOutput=inherit StandardError=inherit
-Restart=always User=pi
-
-[Install] WantedBy=multi-user.target
-
-#Contents of /etc/systemd/system/myservice.service
-
-[Unit] Description=My Service[ After=network.target
-
-[Service] Type=simple Restart=always ExecStart=/usr/local/bin/myservice
-
-[Install] WantedBy=multi-user.target
-
 how-to-use-systemctl-to-manage-systemd-services-and-units
 
 https://systemd.io
-
-
-
 
 ## System and User Services
 
@@ -48,9 +27,10 @@ use a simple self-contained unit file, see [systemd.unit] for advanced
 approaches.
 
 Unit files for user services can be put [in several
-places](https://www.freedesktop.org/software/systemd/man/systemd.unit.html#User%
-20Unit%20Search%20Path). Some of these require root access, but there are
-multiple possible places in your home directory. As far as I can tell, there is
+places. Some of these require root access, but there are
+multiple possible places in your home directory.
+
+As far as I can tell, there is
 no established default choice for these, so for this tutorial we are going to
 use `~/.config/systemd/user/`.
 
@@ -391,131 +371,7 @@ that it runs as the correct user:
 
 At times you create a script and then you want to have the scripts controlled by systemd or in some cases you wish to have the scripts getting restarted by itself when it is killed due to some reason. In such cases systemd in Linux helps to configure services which can be managed. To do so follow the following steps.
 
-# Writing a systemd Service for SkyWeather2
-
-Skyweather2 (SKW2) from SwitchDocLabs is a great project that allows makers to set up and monitor weather informtatoin in their local environment.
-
-SKW2 currently uses the rc.local file to start up the skyweather and dashboard apps when the system reboots.
-
-There is another way.
-
-Many modern Linux distributions use a software suite [systemd] to manage the system's services (or
-*daemons*), for example to automatically start certain services in the correct
-order when the system boots.
-
-Aside from this `README.md` file, this repository contains a basic
-implementation of a Python service consisting of 2 Python script
-and 2 systemd unit files that, when installed, will provide a systemd implementation for both the SkyWeather2 server and the dash dashboard server.
-
-Note: if you have already set up the rc.local from the setup guide, page xx, you need to take all those changes out prior to this setup.
-
-
-to start the setup...
-
-ssh into your SkyWeather2 Raspberry Pi
-
-```
-cd /etc/systemd/systemd
-
-```
-
-copy the files:
-```
-cp /yourdownloadlocatoin/your-service1.service and yourservice2.service 
-```
- and check that they include the following:
-
-```
-[Unit]
-Description=<description about this service>
-
-[Service]
-User=<user e.g. root>
-WorkingDirectory=<directory_of_script e.g. /root>
-ExecStart=<script which needs to be executed>
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
-```
-
-For Python specific projects which include virtual environment:
-
-```
-[Unit]
-Description=<project description>
-
-[Service]
-User=<user e.g. root>
-WorkingDirectory=<path to your project directory containing your python script>
-ExecStart=/home/user/.virtualenv/bin/python main.py
-Restart=always
-# replace /home/user/.virtualenv/bin/python with your virtualenv and main.py with your script
-
-
-[Install]
-WantedBy=multi-user.target
-```
-
-OR
-
-```
-[Unit]
-Description=<project description>
-
-[Service]
-User=<user e.g. root>
-WorkingDirectory=<path to your project directory>
-ExecStart=/bin/bash -c 'cd /home/ubuntu/project/ && source venv/bin/activate && python test.py'
-
-[Install]
-WantedBy=multi-user.target
-
-```
-
-Reload the service files to include the new service.
-```
-sudo systemctl daemon-reload
-```
-
-Start your service
-```
-sudo systemctl start your-service.service
-```
-To check the status of your service
-```
-sudo systemctl status example.service
-```
-
-To enable your service on every reboot
-```
-sudo systemctl enable example.service
-```
-
-To disable your service on every reboot
-```
-sudo systemctl disable example.service
-```
-
-## Where to go from here
-
-We now have a basic implementation of a system systemd service in Python.
-Depending on your goal, there are many ways to go forward. Here are some ideas:
-
-* Add support for reloading the service's configuration without a hard restart.
-See the
-[`ExecReload`](https://www.freedesktop.org/software/systemd/man/systemd.service.
-html#ExecReload=) option.
-* Explore the other features of the [python-systemd]
-package, for example the
-[`systemd.journal`](https://www.freedesktop.org/software/systemd/python-systemd/
-journal.html) module for advanced interaction with the systemd journal.
-
-And of course, if you find an error in this tutorial or have an addition, feel
-free to create an issue or a pull request.
-
-Happy coding!
-
+References:
 
 [python-systemd]: https://github.com/systemd/python-systemd [sd_notify]:
 https://www.freedesktop.org/software/systemd/man/sd_notify.html [systemd]:
