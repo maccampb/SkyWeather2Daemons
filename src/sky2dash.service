@@ -1,5 +1,5 @@
 [Unit]
-Description=skyweather2 dashboard app service
+Description= service file to manage the SDL SkyWeather2 dashboard app service
 After=network.target
 After=mysqld.service
 

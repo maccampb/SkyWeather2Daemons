@@ -1,10 +1,11 @@
 ## **Systemd service package for Skyweather2**
 
-## Writing a systemd Service for SkyWeather2##
+### Writing a systemd Service for SkyWeather2##
 
-SkyWeather2 (SKW2) from SwitchDocLabs is a great project that allows makers to set up and monitor weather informtatoin in their local environment.
 
-SKW2 currently uses the rc.local file to start up the skyweather and dashboard apps when the system reboots.
+The SkyWeather2 system from SwitchDocLabs is a great project that allows makers to set up and monitor weather related information in their local environment.
+
+SkyWeather2 documentation uses the rc.local file to start up the skyweather and dashboard apps when the system reboots.
 
 Many modern Linux distributions use a software suite [systemd] to manage the system's services (or *daemons*), for example to automatically start certain services in the correct order when the system boots. This is replacing the rc.local method in newer systems.
 
@@ -29,7 +30,7 @@ files. These need to be copied from wherever you downloaded them to the appropri
 Note: if you have already set up the rc.local startup from the setup guide, "SkyWeather2ConfigurationAndOperationsManual1.2.pdf" page 9, you need to comment out those changes out prior to this setup.
 
 
-To set up the main SkyWeather2 service:
+### To set up the main SkyWeather2 service:
 
 ssh into your SkyWeather2 Raspberry Pi and change to the services directory. We are putting these the system directory versus the "user" directory as they need to be run as superuser (su). You may need to use the sudo command to get access to the required directories.
 
@@ -82,14 +83,28 @@ To check the status of your service, see how long it's been running and get othe
 sudo systemctl status skyweather2
 ```
 
-it should look like
+The output should look like
+```
+pi@SwitchDocLabs:/var/log $ systemctl status skyweather2
+● skyweather2.service - skyweather2 service
+   Loaded: loaded (/etc/systemd/system/skyweather2.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2022-01-31 14:56:38 EST; 24s ago
+ Main PID: 1346 (skyweather2exec)
+    Tasks: 21 (limit: 4915)
+   CGroup: /system.slice/skyweather2.service
+           ├─1346 /bin/bash /home/pi/bin/skyweather2exec.sh
+           ├─1347 /usr/bin/python3 /home/pi/SDL_Pi_SkyWeather2/SkyWeather2.py
+           ├─1369 /usr/bin/pigpiod
+           └─1385 /usr/local/bin/rtl_433 -q -F json -R 146 -R 147 -R 148 -R 150 -R 151 -R 152
+
+Jan 31 14:56:38 SwitchDocLabs systemd[1]: Started skyweather2 service.
 ```
 
 
 If you want to disable your service when the system reboots, because you need to do a upgrade or the program is getting into an loop:
 
 ```
-sudo systemctl disable SkyWeather2
+sudo systemctl disable skyweather2
 ```
 
 ## Where to go from here
