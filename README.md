@@ -5,21 +5,21 @@
 
 The SkyWeather2 system from SwitchDocLabs is a great project that allows makers to set up and monitor weather related information in their local environment.
 
-SkyWeather2 documentation uses the rc.local file to start up the skyweather and dashboard apps when the system reboots.
+SkyWeather2 documentation covers the use of the rc.local file to start up the skyweather and dashboard apps each time the RPi is rebooted .
 
 Many modern Linux distributions use a software suite [systemd] to manage the system's services (or *daemons*), for example to automatically start certain services in the correct order when the system boots. This is replacing the rc.local method in newer systems.
 
 Aside from this `README.md` file, this repository contains a basic
-implementation of Python services consisting of 2 Python scripts
-and 2 systemd unit files.
+implementation consisting of 2 Python scripts
+and 2 systemd unit files to help manage the SkyWeather2 software.
 
 These files, when installed, will provide a systemd implementation to startup and manage both the SkyWeather2 server and the dash dashboard server.
 
 These services provide the added bonus that if the SkyWeather2 or dashboard services shutdown unexpectedly, systemd will try to restart them.
 
-NOTE: These instructions assume that the file directories and files are the same as the ones on the SwitchDocLabs SD Card. These will set up the SkyWeather2 service for the main software package, and you can repeat this to setup the dashboard component.
+NOTE: These instructions assume that the file directories and files are the same as the ones on the SwitchDocLabs SDCard. These will set up the SkyWeather2 service for the main software package, and you can repeat this to setup the dashboard component. If you are using a different setup, you could modify the scrips accordingly.
 
-To setup systemd for the main SkyWeather2 service, you'll use:
+To setup systemd service for the main SkyWeather2 application, you'll use:
 
 - skyweather2.service
 - skyweather2exec.sh
@@ -51,12 +51,17 @@ ls -la
 ```
 to check that the file copied correctly.
 
-Next, copy the .sh file into the same directory as the SkyWeather2.py file. This needs to be in the same ditrectory as the program.
+Next, copy the .sh file into the same directory as the SkyWeather2.py file.
+This needs to be in the same location as the SkyWeather2.py file.
+```
+cp /yourdownloadlocation/skyweather2exec.sh /home/pi/SDL_Pi_SkyWeather2
+```
+
 Check that it was copied correctly.
 
 You may need to make the .sh files executable.
 ```
-chmod +x skyweather2.service
+chmod +x skyweather2exec.sh
 ```
 
 Tell the systemd daemon to reload the systemd service files to include the new service we ksut added.
@@ -109,11 +114,10 @@ sudo systemctl disable skyweather2
 
 ## Where to go from here
 
-This will give you a service that you can use to manage the SkyWeather2 server. you can repeat the steps for the dash server with the provided Files by repeating the same steps.
+This will give you a service that you can use to manage the SkyWeather2 server. you can repeat the steps for the dash server with the provided Files by repeating the same steps. There is a .service file and a .sh file for the dashboard compoent in the GitHib repository.
 
 You can look up more information about systemd at [www.systemd.io](https://www.systemd.io)
 
-And of course, if you find an error in this tutorial or have an addition, feel
-free to create an issue or a pull request.
+And of course, if you find an error in this tutorial or have an addition, feel free to create an issue or a pull request.
 
 Happy coding!
