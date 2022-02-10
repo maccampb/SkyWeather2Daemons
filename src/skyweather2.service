@@ -1,6 +1,6 @@
 # skyweather2.service
 [Unit]
-Description=service to manage the skyweather2 service
+Description=Service File to manage the skyweather2 service
 After=network.target
 After=mysqld.service
 
