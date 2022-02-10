@@ -76,7 +76,7 @@ Next, enable the service to launch on every reboot. This is very useful as you w
 sudo systemctl enable skyweather2
 ```
 
-Start your service by telling the systemd to attempt to start the server.
+Start your service by telling the systemd to attempt to start the server. A output file that may provide useful for debugging will be created called "SDL_Pi_skyweather2.out".
 
 ```
 sudo systemctl start skyweather2
