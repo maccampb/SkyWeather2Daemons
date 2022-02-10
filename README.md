@@ -19,12 +19,12 @@ These services provide the added bonus that if the SkyWeather2 or dashboard serv
 
 NOTE: These instructions assume that the file directories and files are the same as the ones on the SwitchDocLabs SDCard. These will set up the SkyWeather2 service for the main software package, and you can repeat this to setup the dashboard component. If you are using a different setup, you could modify the scrips accordingly.
 
-To setup systemd service for the main SkyWeather2 application, you'll use:
+To setup systemd service for the main SkyWeather2 application, you'll use the following files:
 
 - skyweather2.service
 - skyweather2exec.sh
 
-files. These need to be copied from wherever you downloaded them to the appropriate directories on the SwitchDocLabs Pi.
+These need to be copied from wherever you downloaded them to the appropriate directories on the SwitchDocLabs Pi.
 
 
 Note: if you have already set up the rc.local startup from the setup guide, "SkyWeather2ConfigurationAndOperationsManual1.2.pdf" page 9, you need to comment out those changes out prior to this setup.
