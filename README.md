@@ -1,6 +1,6 @@
-## **Systemd service package for Skyweather2**
+##Systemd service package for Skyweather2
 
-### Writing a systemd Service for SkyWeather2##
+### Writing a systemd Service for SkyWeather2
 
 
 The SkyWeather2 system from SwitchDocLabs is a great project that allows makers to set up and monitor weather related information in their local environment.
