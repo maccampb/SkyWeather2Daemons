@@ -51,15 +51,23 @@ ls -la
 ```
 to check that the file copied correctly.
 
-Next, copy the .sh file into the same directory as the SkyWeather2.py file.
-This needs to be in the same location as the SkyWeather2.py file.
+Next, copy the .sh file into the /home/pi/bin directory.
+if the /bin directory does not exist, create it with
+
 ```
-sudo cp /yourdownloadlocation/skyweather2exec.sh /home/pi/SDL_Pi_SkyWeather2
+mkdir /home/pi/bin
+```
+
+and copy the skyweather2exec.sh file there...
+
+```
+sudo cp /yourdownloadlocation/skyweather2exec.sh /home/pi/bin
 ```
 
 Check that it was copied correctly.
 
 You may need to make the .sh files executable.
+
 ```
 sudo chmod +x skyweather2exec.sh
 ```
