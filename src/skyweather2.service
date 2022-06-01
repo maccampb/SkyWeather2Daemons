@@ -3,6 +3,7 @@
 Description=Service File to manage the skyweather2 service
 After=network.target
 After=mysqld.service
+Requires=multi-user.target
 
 [Service]
 Type=idle
@@ -11,7 +12,6 @@ WorkingDirectory=/home/pi/SDL_Pi_SkyWeather2
 Restart=always
 RestartSec=10
 User=root
-Requires=multi-user.target
 
 [Install]
-# WantedBy=multi-user.target
+WantedBy=multi-user.target
